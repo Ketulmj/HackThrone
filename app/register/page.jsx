@@ -1,39 +1,68 @@
 "use client"
 
 import React from "react"
-
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "@/app/hooks/use-toast"
+import register , { refCode } from "../actions/register"
 
 export default function RegisterPage() {
   const [price, setPrice] = useState(149)
   const [referralCode, setReferralCode] = useState("")
+  const isValidCode = (code) => code === "STUD2025"
 
-  const handleReferralCodeChange = (e) => {
-    setReferralCode(e.target.value)
-    // Simple validation - in a real app, you'd verify this against a database
-    if (e.target.value.trim().length > 0) {
+  useEffect(() => {
+    if (isValidCode(referralCode)) {
       setPrice(99)
     } else {
       setPrice(149)
     }
-  }
+  }, [referralCode])
 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    toast({
-      title: "Registration submitted!",
-      description: "Thank you for registering for HackThrone 2025.",
-    })
-  }
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault()
+  //   formData.price = price
+  //   console.log(formData)
+  //   // Handle form submission logic here
+  //   fetch("/api/register", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify({
+  //       firstName: formData.firstName,
+  //       lastName: formData.lastName,
+  //       email: formData.email,
+  //       organization: formData.organization,
+  //       referralCode: referralCode,
+  //       price: price,
+  //     }),
+  //   })
+  //     .then((response) => {
+  //       if (response.ok) {
+  //         return response.json()
+  //       } else {
+  //         throw new Error("Network response was not ok")
+  //       }
+  //     })
+  //     .then((data) => {
+  //       console.log("Success:", data)
+  //       // Handle success
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error:", error)
+  //       // Handle error
+  //     })
+  //   toast({
+  //     title: "Registration submitted!",
+  //     description: "Further instructions will be shared thorugh email.",
+  //   })
+  // }
 
   return (
     <div className="container py-12 px-4 md:px-6 circuit-overlay">
@@ -49,7 +78,7 @@ export default function RegisterPage() {
             <CardDescription className="text-gray-400">Please provide all required information</CardDescription>
           </CardHeader>
           <CardContent>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form action={register} className="space-y-6">
               <div className="space-y-4">
                 <h3 className="text-lg font-medium text-green-400">Personal Information</h3>
 
@@ -61,6 +90,9 @@ export default function RegisterPage() {
                     <Input
                       id="first-name"
                       placeholder="John"
+                      name="firstName"
+                      // value={formData.firstName}
+                      // onChange={(e) => setformData({ ...formData, firstName: e.target.value })}
                       required
                       className="bg-cyber-dark border-green-900/50 focus:border-green-500"
                     />
@@ -71,6 +103,7 @@ export default function RegisterPage() {
                     </Label>
                     <Input
                       id="last-name"
+                      name="lastName"
                       placeholder="Doe"
                       required
                       className="bg-cyber-dark border-green-900/50 focus:border-green-500"
@@ -84,6 +117,7 @@ export default function RegisterPage() {
                   </Label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="john.doe@example.com"
                     required
@@ -91,7 +125,7 @@ export default function RegisterPage() {
                   />
                 </div>
 
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="phone" className="text-gray-300">
                     Phone Number
                   </Label>
@@ -106,17 +140,17 @@ export default function RegisterPage() {
 
                 <div className="space-y-2">
                   <Label htmlFor="organization" className="text-gray-300">
-                    Organization/University*
+                    Organization/University
                   </Label>
                   <Input
                     id="organization"
                     placeholder="University of Technology"
                     className="bg-cyber-dark border-green-900/50 focus:border-green-500"
                   />
-                </div>
+                </div> */}
               </div>
 
-              <div className="space-y-4">
+              {/* <div className="space-y-4">
                 <h3 className="text-lg font-medium text-green-400">Professional Information</h3>
 
                 <div className="space-y-2">
@@ -178,7 +212,7 @@ export default function RegisterPage() {
                   </div>
                 </div>
 
-                {/* <div className="space-y-2">
+                <div className="space-y-2">
                   <Label htmlFor="portfolio" className="text-gray-300">
                     Portfolio/GitHub URL
                   </Label>
@@ -188,10 +222,10 @@ export default function RegisterPage() {
                     placeholder="https://github.com/yourusername"
                     className="bg-cyber-dark border-green-900/50 focus:border-green-500"
                   />
-                </div> */}
+                </div>
               </div>
 
-              {/* <div className="space-y-4">
+              <div className="space-y-4">
                 <h3 className="text-lg font-medium text-green-400">Hackathon Preferences</h3>
 
                 <div className="space-y-2">
@@ -233,13 +267,15 @@ export default function RegisterPage() {
                   </Label>
                   <Input
                     id="referral"
+                    name="referralCode"
                     placeholder="Enter referral code for discount"
                     className="bg-cyber-dark border-green-900/50 focus:border-green-500"
                     value={referralCode}
-                    onChange={handleReferralCodeChange}
+                    onChange={(e) => setReferralCode(e.target.value)
+                    }
                   />
                   <p className="text-sm text-green-400">
-                    {referralCode
+                    {isValidCode(referralCode)
                       ? "Student discount applied!"
                       : "Enter a valid referral code to get the student discount."}
                   </p>
@@ -247,12 +283,12 @@ export default function RegisterPage() {
 
                 <div className="bg-cyber-dark p-4 rounded-lg border border-green-900/50">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-300">Registration Fee:</span>
+                    <span className="text-gray-300">Registration Fee</span>
                     <span className="font-bold text-green-400">${price}</span>
                   </div>
                 </div>
 
-                <div className="flex items-center space-x-2">
+                {/* <div className="flex items-center space-x-2">
                   <Checkbox id="terms" required className="border-green-500/50 data-[state=checked]:bg-green-500" />
                   <label htmlFor="terms" className="text-sm text-gray-300">
                     I agree to the{" "}
@@ -264,7 +300,7 @@ export default function RegisterPage() {
                       Privacy Policy
                     </a>
                   </label>
-                </div>
+                </div> */}
               </div>
 
               <Button type="submit" className="w-full cyber-button">

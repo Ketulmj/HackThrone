@@ -11,7 +11,7 @@ export function HeroSection() {
     <section className="relative h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Matrix code rain effect */}
       <div className="absolute inset-0 overflow-hidden z-[1]">
-        {/* {Array.from({ length: 20 }).map((_, i) => (
+        {Array.from({ length: 20 }).map((_, i) => (
           <div
             key={i}
             className="absolute text-green-500/20 text-xs font-mono animate-matrix-rain"
@@ -26,14 +26,14 @@ export function HeroSection() {
               <div key={j}>{Math.random() > 0.5 ? "1" : "0"}</div>
             ))}
           </div>
-        ))} */}
-        <LetterGlitch
+        ))}
+        {/* <LetterGlitch
           glitchColors={['#02A78B28']}
           glitchSpeed={50}
           // centerVignette={true}
           outerVignette={true}
           smooth={true}
-        />
+        /> */}
       </div>
       {/* Content */}
       <div className="container px-4 md:px-6 z-10 text-center">

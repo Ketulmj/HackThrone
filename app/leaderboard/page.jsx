@@ -138,7 +138,7 @@ export default function LeaderboardPage() {
 
               <div className="text-center text-green-400 text-sm">
                 <p>
-                  Congratulations to all winners and participants! The next CodeCraft Hackathon will be announced soon.
+                  Congratulations to all winners and participants! The next Hackathon will be announced soon.
                 </p>
               </div>
             </div>
