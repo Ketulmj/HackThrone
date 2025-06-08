@@ -1,7 +1,6 @@
 'use server'
 
 import sendMail from "@/lib/sendMail.js";
-// export const refCode = async () => "STUD2025"
 
 export async function register(formData) {
     // Validate form fields

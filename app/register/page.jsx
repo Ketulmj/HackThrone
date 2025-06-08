@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Checkbox } from "@/components/ui/checkbox"
 import { toast } from "@/app/hooks/use-toast"
-import register , { refCode } from "../actions/register"
+import register from "@/app/actions/register"
 
 export default function RegisterPage() {
   const [price, setPrice] = useState(149)
@@ -283,7 +283,7 @@ export default function RegisterPage() {
 
                 <div className="bg-cyber-dark p-4 rounded-lg border border-green-900/50">
                   <div className="flex justify-between items-center">
-                    <span className="text-gray-300">Registration Fee</span>
+                    <span className="text-gray-300">Registration Fees</span>
                     <span className="font-bold text-green-400">${price}</span>
                   </div>
                 </div>
@@ -304,7 +304,7 @@ export default function RegisterPage() {
               </div>
 
               <Button type="submit" className="w-full cyber-button">
-                Complete Registration
+                Pay Fees
               </Button>
             </form>
           </CardContent>
